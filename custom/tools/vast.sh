@@ -513,20 +513,18 @@ create_conda_env() {
     
     echo ""
     echo "选择Python版本:"
-    echo "1. Python 3.11"
-    echo "2. Python 3.10"
-    echo "3. Python 3.9"
-    echo "4. Python 3.8"
-    echo "5. 自定义版本"
-    read -p "请选择: " py_choice
+    echo "1. Python 3.12"
+    echo "2. Python 3.11"
+    echo "3. Python 3.10"
+    read -p "请选择 (默认3.11): " py_choice
     
     case $py_choice in
-        1) python_version="3.11" ;;
-        2) python_version="3.10" ;;
-        3) python_version="3.9" ;;
-        4) python_version="3.8" ;;
-        5)
-            read -p "请输入Python版本 (如: 3.10.12): " python_version
+        1) python_version="3.12" ;;
+        2) python_version="3.11" ;;
+        3) python_version="3.10" ;;
+        "")
+            python_version="3.11"
+            log_info "使用默认版本: Python 3.11"
             ;;
         *)
             log_error "无效选择"
