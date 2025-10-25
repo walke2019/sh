@@ -498,6 +498,101 @@ EOF
     read -p "按回车键继续..."
 }
 
+# 软件包管理菜单
+package_menu() {
+    while true; do
+        clear
+        echo -e "${CYAN}=== 软件包管理 ===${RESET}"
+        echo ""
+        echo "1. 安装软件包"
+        echo "2. 卸载软件包"
+        echo "3. 更新系统软件包"
+        echo "4. 搜索软件包"
+        echo "5. 查看已安装软件"
+        echo "0. 返回主菜单"
+        echo ""
+        read -p "请选择操作: " choice
+        
+        case $choice in
+            1)
+                echo ""
+                echo "常用软件包："
+                echo "  基础工具: curl wget git vim nano htop"
+                echo "  网络工具: net-tools traceroute nmap"
+                echo "  压缩工具: zip unzip tar gzip"
+                echo "  开发工具: gcc make python3 nodejs"
+                echo ""
+                read -p "请输入要安装的软件包名(多个用空格分隔): " packages
+                if [ -n "$packages" ]; then
+                    install_package $packages
+                    log_success "安装完成"
+                fi
+                ;;
+            2)
+                echo ""
+                read -p "请输入要卸载的软件包名(多个用空格分隔): " packages
+                if [ -n "$packages" ]; then
+                    read -p "确认卸载 $packages ? (y/n): " confirm
+                    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                        remove_package $packages
+                        log_success "卸载完成"
+                    fi
+                fi
+                ;;
+            3)
+                log_info "正在更新系统软件包..."
+                if command -v apt &>/dev/null; then
+                    apt update && apt upgrade -y
+                elif command -v yum &>/dev/null; then
+                    yum update -y
+                elif command -v dnf &>/dev/null; then
+                    dnf update -y
+                elif command -v pacman &>/dev/null; then
+                    pacman -Syu --noconfirm
+                fi
+                log_success "系统更新完成"
+                ;;
+            4)
+                read -p "请输入要搜索的软件包名: " keyword
+                if [ -n "$keyword" ]; then
+                    if command -v apt &>/dev/null; then
+                        apt search "$keyword"
+                    elif command -v yum &>/dev/null; then
+                        yum search "$keyword"
+                    elif command -v dnf &>/dev/null; then
+                        dnf search "$keyword"
+                    elif command -v pacman &>/dev/null; then
+                        pacman -Ss "$keyword"
+                    fi
+                fi
+                ;;
+            5)
+                echo ""
+                echo "已安装的软件包："
+                if command -v apt &>/dev/null; then
+                    dpkg -l | grep ^ii | awk '{print $2}' | head -50
+                    echo ""
+                    echo "(仅显示前50个，使用 dpkg -l 查看全部)"
+                elif command -v yum &>/dev/null; then
+                    yum list installed | head -50
+                elif command -v dnf &>/dev/null; then
+                    dnf list installed | head -50
+                elif command -v pacman &>/dev/null; then
+                    pacman -Q | head -50
+                fi
+                ;;
+            0)
+                return
+                ;;
+            *)
+                log_error "无效选择"
+                ;;
+        esac
+        
+        read -p "按回车键继续..."
+    done
+}
+
 # 主菜单
 main_menu() {
     while true; do
@@ -536,16 +631,7 @@ main_menu() {
             5) docker_image_menu ;;
             6) firewall_menu ;;
             7) ssl_menu ;;
-            8)
-                read -p "安装(i)还是卸载(r)软件: " action
-                read -p "请输入软件包名: " packages
-                if [ "$action" == "i" ]; then
-                    install_package $packages
-                else
-                    remove_package $packages
-                fi
-                read -p "按回车键继续..."
-                ;;
+            8) package_menu ;;
             0)
                 log_info "感谢使用！"
                 exit 0

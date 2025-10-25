@@ -34,8 +34,8 @@ custom_toolbox_menu() {
         echo "╚═══════════════════════════════╝"
         echo -e "${gl_bai}"
         echo -e "${gl_kjlan}------------------------${gl_bai}"
-        echo -e "${gl_kjlan}1.   ${gl_bai}自定义工具 1"
-        echo -e "${gl_kjlan}2.   ${gl_bai}自定义工具 2"
+        echo -e "${gl_kjlan}1.   ${gl_bai}服务器管理工具箱"
+        echo -e "${gl_kjlan}2.   ${gl_bai}Vast.ai GPU容器管理"
         echo -e "${gl_kjlan}3.   ${gl_bai}自定义工具 3"
         echo -e "${gl_kjlan}4.   ${gl_bai}配置管理"
         echo -e "${gl_kjlan}------------------------${gl_bai}"
@@ -53,8 +53,8 @@ custom_toolbox_menu() {
                 fi
                 ;;
             2)
-                if [ -f "${TOOLS_DIR}/tool2.sh" ]; then
-                    bash "${TOOLS_DIR}/tool2.sh"
+                if [ -f "${TOOLS_DIR}/vast.sh" ]; then
+                    bash "${TOOLS_DIR}/vast.sh"
                 else
                     echo -e "${gl_hong}工具脚本不存在！${gl_bai}"
                     sleep 2
