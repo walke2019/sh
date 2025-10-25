@@ -1,0 +1,39 @@
+# 上游文件（不提交到自己的仓库）
+kejilion.sh
+kejilion_sh_log.txt
+*.backup
+
+# 保留自定义目录
+!custom/
+
+# 保留文档目录
+!docs/
+
+# 配置文件中的敏感信息
+custom/config/*.key
+custom/config/*.secret
+custom/config/*.env
+*.env
+
+# 日志文件
+*.log
+custom/logs/
+
+# 临时文件
+*.tmp
+*.swp
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE 配置
+.vscode/
+.idea/
+*.sublime-*
+
+# 编译文件
+*.o
+*.so
+*.a
