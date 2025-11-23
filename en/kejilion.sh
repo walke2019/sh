@@ -6731,7 +6731,7 @@ linux_tools() {
 
   while true; do
 	  clear
-	  # send_stats "Basic Tools"
+	  # send_stats "Basic tools"
 	  echo -e "basic tools"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}1.   ${gl_bai}curl download tool${gl_huang}★${gl_bai}                   ${gl_kjlan}2.   ${gl_bai}wget download tool${gl_huang}★${gl_bai}"
@@ -7145,7 +7145,7 @@ docker_ssh_migration() {
 				local VOL_ARGS=""
 				for path in $VOL_PATHS; do VOL_ARGS+="-v $path:$path "; done
 
-				# mirror
+				# Mirror
 				local IMAGE
 				IMAGE=$(jq -r '.[0].Config.Image' "$inspect_file")
 
@@ -13045,7 +13045,7 @@ EOF
 						;;
 					2)
 						rm -f /etc/gai.conf
-						echo "Switched to IPv6 priority"
+						echo "Switched to IPv6 first"
 						send_stats "Switched to IPv6 first"
 						;;
 
