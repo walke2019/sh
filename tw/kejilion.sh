@@ -547,7 +547,7 @@ while true; do
 			docker rm -f $dockername
 			;;
 		5)
-			send_stats "重啟指定容器"
+			send_stats "重启指定容器"
 			read -e -p "請輸入容器名稱（多個容器名稱請以空格分隔）:" dockername
 			docker restart $dockername
 			;;
@@ -799,7 +799,7 @@ docker_ipv6_on() {
 
 		# 比較原始配置與新配置
 		if [[ "$ORIGINAL_CONFIG" == "$UPDATED_CONFIG" ]]; then
-			echo -e "${gl_huang}目前已開啟ipv6訪問${gl_bai}"
+			echo -e "${gl_huang}当前已开启ipv6访问${gl_bai}"
 		else
 			echo "$UPDATED_CONFIG" | jq . > "$CONFIG_FILE"
 			restart docker
@@ -814,7 +814,7 @@ docker_ipv6_off() {
 
 	local CONFIG_FILE="/etc/docker/daemon.json"
 
-	# 檢查設定檔是否存在
+	# 检查配置文件是否存在
 	if [ ! -f "$CONFIG_FILE" ]; then
 		echo -e "${gl_hong}設定檔不存在${gl_bai}"
 		return
@@ -1252,7 +1252,7 @@ iptables_panel() {
 add_swap() {
 	local new_swap=$1  # 获取传入的参数
 
-	# 取得目前系統中所有的 swap 分區
+	# 取得目前系統中所有的 swap 分割區
 	local swap_partitions=$(grep -E '^/dev/' /proc/swaps | awk '{print $1}')
 
 	# 遍歷並刪除所有的 swap 分割區
@@ -2870,7 +2870,7 @@ docker_app_plus() {
 		echo "------------------------"
 		echo "0. 返回上一級選單"
 		echo "------------------------"
-		read -e -p "輸入你的選擇:" choice
+		read -e -p "输入你的选择: " choice
 		case $choice in
 			1)
 				setup_docker_dir
@@ -3592,7 +3592,7 @@ ldnmp_web_status() {
 			2)
 				send_stats "克隆站點域名"
 				read -e -p "請輸入舊網域名稱:" oddyuming
-				read -e -p "請輸入新網域名稱:" yuming
+				read -e -p "請輸入新網域:" yuming
 				install_certbot
 				install_ssltls
 				certs_status
@@ -3639,7 +3639,7 @@ ldnmp_web_status() {
 				send_stats "建立關聯站點"
 				echo -e "為現有的站點再關聯一個新網域用於訪問"
 				read -e -p "請輸入現有的網域名稱:" oddyuming
-				read -e -p "請輸入新網域名稱:" yuming
+				read -e -p "請輸入新網域:" yuming
 				install_certbot
 				install_ssltls
 				certs_status
@@ -3877,7 +3877,7 @@ remote_port = ${remote_port}
 EOF
 
 	# 輸出產生的信息
-	echo "服務$service_name已成功加入 frpc.toml"
+	echo "服務$service_name已成功加入到 frpc.toml"
 
 	docker restart frpc
 
@@ -4301,7 +4301,7 @@ yt_menu_pro() {
 				send_stats "大量影片下載"
 				install nano
 				if [ ! -f "$URL_FILE" ]; then
-				  echo -e "# 輸入多個視訊連結位址\n# https://www.bilibili.com/bangumi/play/ep733316?spm_id_from=333.337.0.0&from_spmid=666.25.episode.0" > "$URL_FILE"
+				  echo -e "# 输入多个视频链接地址\n# https://www.bilibili.com/bangumi/play/ep733316?spm_id_from=333.337.0.0&from_spmid=666.25.episode.0" > "$URL_FILE"
 				fi
 				nano $URL_FILE
 				echo "現在開始批量下載..."
@@ -5079,7 +5079,7 @@ bbrv3() {
 						apt update -y
 						apt install -y linux-xanmod-x64v$version
 
-						echo "XanMod核心已更新。重啟後生效"
+						echo "XanMod内核已更新。重启后生效"
 						rm -f /etc/apt/sources.list.d/xanmod-release.list
 						rm -f check_x86-64_psabi.sh*
 
@@ -5163,7 +5163,7 @@ bbrv3() {
 
 elrepo_install() {
 	# 導入 ELRepo GPG 公鑰
-	echo "導入 ELRepo GPG 公鑰..."
+	echo "导入 ELRepo GPG 公钥..."
 	rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 	# 檢測系統版本
 	local os_version=$(rpm -q --qf "%{VERSION}" $(rpm -qf /etc/os-release) 2>/dev/null | awk -F '.' '{print $1}')
@@ -5552,7 +5552,7 @@ Kernel_optimize() {
 	  clear
 	  send_stats "Linux核心調優管理"
 	  echo "Linux系統核心參數優化"
-	  echo "影片介紹: https://www.bilibili.com/video/BV1Kb421J7yg?t=0.1"
+	  echo "视频介绍: https://www.bilibili.com/video/BV1Kb421J7yg?t=0.1"
 	  echo "------------------------------------------------"
 	  echo "提供多種系統參數調優模式，使用者可依自身使用場景進行選擇切換。"
 	  echo -e "${gl_huang}提示:${gl_bai}生產環境請謹慎使用！"
@@ -6008,7 +6008,7 @@ add_connection() {
 	echo "- 連線名稱: my_server"
 	echo "- IP位址: 192.168.1.100"
 	echo "- 使用者名稱: root"
-	echo "- 連接埠: 22"
+	echo "  - 端口: 22"
 	echo "------------------------"
 	read -e -p "請輸入連線名稱:" name
 	read -e -p "請輸入IP位址:" ip
@@ -6174,7 +6174,7 @@ ssh_manager() {
 
 
 
-# 列出可用的硬碟分割區
+# 列出可用的硬盘分区
 list_partitions() {
 	echo "可用的硬碟分割區："
 	lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT | grep -v "sr\|loop"
@@ -6596,7 +6596,7 @@ rsync_manager() {
 	while true; do
 		clear
 		echo "Rsync 遠端同步工具"
-		echo "遠端目錄之間同步，支援增量同步，高效穩定。"
+		echo "远程目录之间同步，支持增量同步，高效稳定。"
 		echo "---------------------------------"
 		list_tasks
 		echo
@@ -6946,7 +6946,7 @@ linux_tools() {
 
 		  32)
 			  clear
-			  send_stats "全部安裝（不含遊戲和螢幕保護程式）"
+			  send_stats "全部安装（不含游戏和屏保）"
 			  install curl wget sudo socat htop iftop unzip tar tmux ffmpeg btop ranger ncdu fzf vim nano git
 			  ;;
 
@@ -7120,7 +7120,7 @@ docker_ssh_migration() {
 					PACKED_COMPOSE_PATHS["$project_dir"]=1
 					echo -e "${GREEN}Compose 項目 [$project_name] 已打包:${project_dir}${NC}"
 				else
-					echo -e "${RED}未找到 docker-compose.yml，跳過此容器...${NC}"
+					echo -e "${RED}未找到 docker-compose.yml，跳过此容器...${NC}"
 				fi
 			else
 				# 普通容器備份卷
@@ -7214,7 +7214,7 @@ docker_ssh_migration() {
 		done
 
 		# --------- 繼續還原一般容器 ---------
-		echo -e "${BLUE}檢查並還原普通 Docker 容器...${NC}"
+		echo -e "${BLUE}检查并还原普通 Docker 容器...${NC}"
 		local has_container=false
 		for json in "$BACKUP_DIR"/*_inspect.json; do
 			[[ ! -f "$json" ]] && continue
@@ -8036,7 +8036,7 @@ linux_ldnmp() {
 	echo -e "${gl_huang}3.   ${gl_bai}安裝Discuz論壇${gl_huang}4.   ${gl_bai}安裝可道雲桌面"
 	echo -e "${gl_huang}5.   ${gl_bai}安裝蘋果CMS影視站${gl_huang}6.   ${gl_bai}安裝獨角數發卡網"
 	echo -e "${gl_huang}7.   ${gl_bai}安裝flarum論壇網站${gl_huang}8.   ${gl_bai}安裝typecho輕量部落格網站"
-	echo -e "${gl_huang}9.   ${gl_bai}安裝LinkStack分享連結平台${gl_huang}20.  ${gl_bai}自訂動態站點"
+	echo -e "${gl_huang}9.   ${gl_bai}安装LinkStack共享链接平台         ${gl_huang}20.  ${gl_bai}自訂動態站點"
 	echo -e "${gl_huang}------------------------"
 	echo -e "${gl_huang}21.  ${gl_bai}僅安裝nginx${gl_huang}★${gl_bai}                     ${gl_huang}22.  ${gl_bai}網站重定向"
 	echo -e "${gl_huang}23.  ${gl_bai}站點反向代理-IP+端口${gl_huang}★${gl_bai}            ${gl_huang}24.  ${gl_bai}站點反向代理-域名"
@@ -8431,7 +8431,7 @@ linux_ldnmp() {
 	  clear
 	  echo -e "[${gl_huang}5/6${gl_bai}] 編輯網站配置"
 	  echo "-------------"
-	  echo "按任一鍵繼續，可詳細設定網站配置，如偽靜態等內容"
+	  echo "按任意键继续，可以详细设置站点配置，如伪静态等内容"
 	  read -n 1 -s -r -p ""
 	  install nano
 	  nano /home/web/conf.d/$yuming.conf
@@ -8440,13 +8440,13 @@ linux_ldnmp() {
 	  clear
 	  echo -e "[${gl_huang}6/6${gl_bai}] 資料庫管理"
 	  echo "-------------"
-	  read -e -p "1. 我搭建新站 2. 我搭建老站有資料庫備份：" use_db
+	  read -e -p "1. 我搭建新站        2. 我搭建老站有数据库备份： " use_db
 	  case $use_db in
 		  1)
 			  echo
 			  ;;
 		  2)
-			  echo "資料庫備份必須是.gz結尾的壓縮包。請放到/home/目錄下，支援寶塔/1panel備份資料導入。"
+			  echo "数据库备份必须是.gz结尾的压缩包。请放到/home/目录下，支持宝塔/1panel备份数据导入。"
 			  read -e -p "也可以輸入下載鏈接，遠端下載備份數據，直接回車將跳過遠端下載：" url_download_db
 
 			  cd /home/
@@ -10479,7 +10479,7 @@ while true; do
 			ip_address
 			echo "已經安裝完成"
 			check_docker_app_ip
-			echo "初始使用者名稱密碼皆為: admin"
+			echo "初始使用者名稱密碼均為: admin"
 		}
 
 		docker_app_update() {
@@ -12965,7 +12965,7 @@ EOF
 						send_stats "SSH連接埠已修改"
 						new_ssh_port
 					elif [[ $new_port -eq 0 ]]; then
-						send_stats "退出SSH埠修改"
+						send_stats "退出SSH連接埠修改"
 						break
 					else
 						echo "連接埠號碼無效，請輸入1到65535之間的數字。"
@@ -14107,7 +14107,7 @@ linux_file() {
 				send_stats "壓縮檔案/目錄"
 				;;
 			22) # 解压文件/目录
-				read -e -p "請輸入要解壓縮的檔案名稱 (.tar.gz):" filename
+				read -e -p "請輸入要解壓縮的檔名 (.tar.gz):" filename
 				install tar
 				tar -xzvf "$filename" && echo "已解壓縮$filename" || echo "解壓縮失敗"
 				send_stats "解壓縮檔案/目錄"
@@ -14128,7 +14128,7 @@ linux_file() {
 					continue
 				fi
 
-				mv "$src_path" "$dest_path" && echo "檔案或目錄已移動到$dest_path" || echo "移動檔案或目錄失敗"
+				mv "$src_path" "$dest_path" && echo "文件或目录已移动到 $dest_path" || echo "移動檔案或目錄失敗"
 				send_stats "移動檔案或目錄"
 				;;
 
@@ -14474,7 +14474,7 @@ while true; do
 			CheckFirstRun_true
 			yinsiyuanquan2
 			cp -f ~/kejilion.sh /usr/local/bin/k > /dev/null 2>&1
-			echo -e "${gl_lv}腳本已更新到最新版本！${gl_huang}v$sh_v_new${gl_bai}"
+			echo -e "${gl_lv}腳本已更新至最新版本！${gl_huang}v$sh_v_new${gl_bai}"
 			send_stats "腳本已經最新$sh_v_new"
 			break_end
 			~/kejilion.sh
@@ -14621,8 +14621,8 @@ echo "LDNMP快取清理 k web cache"
 echo "安裝WordPress k wp |k wordpress |k wp xxx.com"
 echo "安裝反向代理 k fd |k rp |k 反代 |k fd xxx.com"
 echo "安裝負載平衡 k loadbalance |k 負載平衡"
-echo "安裝L4負載平衡 k stream |k L4負載平衡"
-echo "防火牆面板 k fhq |k 防火牆"
+echo "安装L4负载均衡      k stream |k L4负载均衡"
+echo "防火墙面板          k fhq |k 防火墙"
 echo "開放埠 k dkdk 8080 |k 開啟連接埠 8080"
 echo "關閉連接埠 k gbdk 7800 |k 關閉連接埠 7800"
 echo "放行IP k fxip 127.0.0.0/8 |k 放行IP 127.0.0.0/8"
