@@ -779,7 +779,7 @@ docker_ipv6_on() {
 	local CONFIG_FILE="/etc/docker/daemon.json"
 	local REQUIRED_IPV6_CONFIG='{"ipv6": true, "fixed-cidr-v6": "2001:db8:1::/64"}'
 
-	# Check if the configuration file exists, if not create the file and write default settings
+	# Check if the configuration file exists, if not create the file and write the default settings
 	if [ ! -f "$CONFIG_FILE" ]; then
 		echo "$REQUIRED_IPV6_CONFIG" | jq . > "$CONFIG_FILE"
 		restart docker
@@ -4654,7 +4654,7 @@ add_sshkey() {
 		   -e 's/^\s*#\?\s*ChallengeResponseAuthentication .*/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config
 	rm -rf /etc/ssh/sshd_config.d/* /etc/ssh/ssh_config.d/*
 	restart_ssh
-	echo -e "${gl_lv}ROOT private key login has been turned on, ROOT password login has been turned off, reconnection will take effect${gl_bai}"
+	echo -e "${gl_lv}ROOT private key login has been turned on, ROOT password login has been turned off, and reconnection will take effect.${gl_bai}"
 
 }
 
@@ -4697,7 +4697,7 @@ sed -i 's/^\s*#\?\s*PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_confi
 sed -i 's/^\s*#\?\s*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config;
 rm -rf /etc/ssh/sshd_config.d/* /etc/ssh/ssh_config.d/*
 restart_ssh
-echo -e "${gl_lv}ROOT login setup is completed!${gl_bai}"
+echo -e "${gl_lv}ROOT login setup is complete!${gl_bai}"
 
 }
 
@@ -5116,7 +5116,7 @@ bbrv3() {
 			if [ -r /etc/os-release ]; then
 				. /etc/os-release
 				if [ "$ID" != "debian" ] && [ "$ID" != "ubuntu" ]; then
-					echo "The current environment does not support it. Only Debian and Ubuntu systems are supported."
+					echo "The current environment does not support it, only Debian and Ubuntu systems are supported."
 					break_end
 					linux_Settings
 				fi
@@ -5506,7 +5506,7 @@ restore_defaults() {
 
 # Website building optimization function
 optimize_web_server() {
-	echo -e "${gl_lv}Switch to website construction optimization mode...${gl_bai}"
+	echo -e "${gl_lv}Switch to website building optimization mode...${gl_bai}"
 
 	echo -e "${gl_lv}Optimize file descriptors...${gl_bai}"
 	ulimit -n 65535
@@ -5585,7 +5585,7 @@ Kernel_optimize() {
 			  cd ~
 			  clear
 			  optimize_web_server
-			  send_stats "Website optimization mode"
+			  send_stats "Website optimization model"
 			  ;;
 		  4)
 			  cd ~
@@ -6183,7 +6183,7 @@ list_partitions() {
 # Mount partition
 mount_partition() {
 	send_stats "Mount partition"
-	read -e -p "Please enter the name of the partition to be mounted (e.g. sda1):" PARTITION
+	read -e -p "Please enter the partition name to be mounted (e.g. sda1):" PARTITION
 
 	# Check if the partition exists
 	if ! lsblk -o NAME | grep -w "$PARTITION" > /dev/null; then
@@ -6313,7 +6313,7 @@ disk_manager() {
 	send_stats "Hard disk management function"
 	while true; do
 		clear
-		echo "Hard disk partition management"
+		echo "Hard drive partition management"
 		echo -e "${gl_huang}This feature is under internal testing and should not be used in a production environment.${gl_bai}"
 		echo "------------------------"
 		list_partitions
@@ -12596,7 +12596,7 @@ linux_work() {
 	  send_stats "Backend workspace"
 	  echo -e "Backend workspace"
 	  echo -e "The system will provide you with a workspace that can run permanently in the background, which you can use to perform long-term tasks."
-	  echo -e "Even if you disconnect SSH, the tasks in the workspace will not be interrupted, and the tasks will remain in the background."
+	  echo -e "Even if you disconnect SSH, the tasks in the workspace will not be interrupted, and the background tasks will persist."
 	  echo -e "${gl_huang}hint:${gl_bai}After entering the workspace, use Ctrl+b and then press d alone to exit the workspace!"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo "List of currently existing workspaces"
@@ -12853,7 +12853,7 @@ linux_Settings() {
 			echo "python version management"
 			echo "Video introduction: https://www.bilibili.com/video/BV1Pm42157cK?t=0.1"
 			echo "---------------------------------------"
-			echo "This function can seamlessly install any version officially supported by python!"
+			echo "This function can seamlessly install any version officially supported by Python!"
 			local VERSION=$(python3 -V 2>&1 | awk '{print $2}')
 			echo -e "Current python version number:${gl_huang}$VERSION${gl_bai}"
 			echo "------------"
@@ -13278,8 +13278,8 @@ EOF
 				echo "------------------------"
 				echo "Europe"
 				echo "11. London, UK time 12. Paris, France time"
-				echo "13. Berlin Time, Germany 14. Moscow Time, Russia"
-				echo "15. Utracht Time, Netherlands 16. Madrid Time, Spain"
+				echo "13. Berlin, Germany time 14. Moscow, Russia time"
+				echo "15. Utrecht Time, Netherlands 16. Madrid Time, Spain"
 				echo "------------------------"
 				echo "America"
 				echo "21. US Western Time 22. US Eastern Time"
@@ -13645,7 +13645,7 @@ EOF
 			  	  echo "ROOT private key login mode"
 			  	  echo "Video introduction: https://www.bilibili.com/video/BV1Q4421X78n?t=209.4"
 			  	  echo "------------------------------------------------"
-			  	  echo "A key pair will be generated for a more secure way to log in via SSH"
+			  	  echo "A key pair will be generated, a more secure way to log in via SSH"
 				  echo "------------------------"
 				  echo "1. Generate a new key 2. Import an existing key 3. View the local key"
 				  echo "------------------------"
@@ -14609,7 +14609,7 @@ echo "Software startup k start sshd | k start sshd"
 echo "Software stop k stop sshd | k stop sshd"
 echo "Software restart k restart sshd | k restart sshd"
 echo "Check software status k status sshd | k status sshd"
-echo "k enable docker | k autostart docker | k enable docker when booting the software"
+echo "k enable docker | k autostart docker | k start docker on startup"
 echo "Domain name certificate application k ssl"
 echo "Domain name certificate expiry query k ssl ps"
 echo "docker management plane k docker"

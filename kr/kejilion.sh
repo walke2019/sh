@@ -59,7 +59,7 @@ CheckFirstRun_true() {
 
 # 함수에 묻혀있는 정보를 수집하고 사용자가 사용하는 현재 스크립트 버전 번호, 사용 시간, 시스템 버전, CPU 아키텍처, 기기 국가 및 기능 이름을 기록하는 기능입니다. 민감한 정보는 포함되어 있지 않으니 걱정하지 마세요! 저를 믿어주세요!
 # 이 기능은 왜 설계되었나요? 그 목적은 사용자가 사용하고 싶어하는 기능을 더 잘 이해하고, 기능을 더욱 최적화하고 사용자 요구에 맞는 더 많은 기능을 출시하는 것입니다.
-# send_stats 함수 호출 위치에 대한 전문을 검색할 수 있습니다. 투명하고 오픈 소스입니다. 불편하신 점이 있으시면 이용을 거부하실 수 있습니다.
+# send_stats 함수 호출 위치에 대한 전문을 검색할 수 있습니다. 투명하고 오픈 소스입니다. 우려되는 사항이 있는 경우 이용을 거부하실 수 있습니다.
 
 
 
@@ -533,22 +533,22 @@ while true; do
 			;;
 		2)
 			send_stats "지정된 컨테이너 시작"
-			read -e -p "컨테이너 이름을 입력하세요(여러 컨테이너 이름을 공백으로 구분하세요)." dockername
+			read -e -p "컨테이너 이름을 입력하세요(여러 컨테이너 이름을 공백으로 구분하세요):" dockername
 			docker start $dockername
 			;;
 		3)
 			send_stats "지정된 컨테이너 중지"
-			read -e -p "컨테이너 이름을 입력하세요(여러 컨테이너 이름을 공백으로 구분하세요)." dockername
+			read -e -p "컨테이너 이름을 입력하세요(여러 컨테이너 이름을 공백으로 구분하세요):" dockername
 			docker stop $dockername
 			;;
 		4)
 			send_stats "지정된 컨테이너 삭제"
-			read -e -p "컨테이너 이름을 입력하세요(여러 컨테이너 이름을 공백으로 구분하세요)." dockername
+			read -e -p "컨테이너 이름을 입력하세요(여러 컨테이너 이름을 공백으로 구분하세요):" dockername
 			docker rm -f $dockername
 			;;
 		5)
 			send_stats "지정된 컨테이너를 다시 시작합니다."
-			read -e -p "컨테이너 이름을 입력하세요(여러 컨테이너 이름을 공백으로 구분하세요)." dockername
+			read -e -p "컨테이너 이름을 입력하세요(여러 컨테이너 이름을 공백으로 구분하세요):" dockername
 			docker restart $dockername
 			;;
 		6)
@@ -1529,7 +1529,7 @@ certs_status() {
 		echo -e "1. 도메인 이름이 잘못 입력되었습니다. ➠ 도메인 이름이 올바르게 입력되었는지 확인하세요."
 		echo -e "2. DNS 확인 문제 ➠ 도메인 이름이 서버 IP로 올바르게 확인되었는지 확인"
 		echo -e "3. 네트워크 구성 문제 ➠ Cloudflare Warp 등 가상 네트워크를 사용하는 경우 일시적으로 종료하세요."
-		echo -e "4. 방화벽 제한사항 ➠ 포트 80/443이 열려 있는지 확인하고 접근이 가능한지 확인하세요."
+		echo -e "4. 방화벽 제한 사항 ➠ 포트 80/443이 열려 있는지 확인하고 접근이 가능한지 확인하세요."
 		echo -e "5. 신청 횟수가 한도를 초과했습니다. ➠ Let's Encrypt에는 주간 한도(5회/도메인 이름/주)가 있습니다."
 		echo -e "6. 국내 등록 제한 ➠ 중국 ​​본토 환경의 경우 도메인 이름 등록 여부를 확인하시기 바랍니다."
 		break_end
@@ -2446,7 +2446,7 @@ check_docker_image_update() {
 	local hub_info=$(curl -s "https://hub.docker.com/v2/repositories/$image_repo/tags/$image_tag")
 	local last_updated=$(echo "$hub_info" | jq -r '.last_updated' 2>/dev/null)
 
-	# 획득한 시간을 확인하세요.
+	# 획득한 시간을 확인
 	if [[ -n "$last_updated" && "$last_updated" != "null" ]]; then
 		local container_created_ts=$(date -d "$container_created" +%s 2>/dev/null)
 		local last_updated_ts=$(date -d "$last_updated" +%s 2>/dev/null)
@@ -2762,7 +2762,7 @@ while true; do
 		1)
 			setup_docker_dir
 			check_disk_space $app_size /home/docker
-			read -e -p "애플리케이션 외부 서비스 포트를 입력하고 Enter를 누르면 기본적으로 사용됩니다.${docker_port}포트:" app_port
+			read -e -p "애플리케이션 외부 서비스 포트를 입력하고 Enter 키를 누르면 기본적으로 사용됩니다.${docker_port}포트:" app_port
 			local app_port=${app_port:-${docker_port}}
 			local docker_port=$app_port
 
@@ -2875,7 +2875,7 @@ docker_app_plus() {
 			1)
 				setup_docker_dir
 				check_disk_space $app_size /home/docker
-				read -e -p "애플리케이션 외부 서비스 포트를 입력하고 Enter를 누르면 기본적으로 사용됩니다.${docker_port}포트:" app_port
+				read -e -p "애플리케이션 외부 서비스 포트를 입력하고 Enter 키를 누르면 기본적으로 사용됩니다.${docker_port}포트:" app_port
 				local app_port=${app_port:-${docker_port}}
 				local docker_port=$app_port
 				install jq
@@ -3188,7 +3188,7 @@ nginx_install_status() {
 
 ldnmp_web_on() {
 	  clear
-	  echo "당신의$webname지어졌습니다!"
+	  echo "당신의$webname건설되었습니다!"
 	  echo "https://$yuming"
 	  echo "------------------------"
 	  echo "$webname설치정보는 다음과 같습니다."
@@ -3197,7 +3197,7 @@ ldnmp_web_on() {
 
 nginx_web_on() {
 	  clear
-	  echo "당신의$webname지어졌습니다!"
+	  echo "당신의$webname건설되었습니다!"
 	  echo "https://$yuming"
 
 }
@@ -3494,7 +3494,7 @@ ldnmp_Proxy_backend_stream() {
 
 	docker exec nginx nginx -s reload
 	clear
-	echo "당신의$webname지어졌습니다!"
+	echo "당신의$webname건설되었습니다!"
 	echo "------------------------"
 	echo "방문 주소:"
 	ip_address
@@ -3814,7 +3814,7 @@ EOF
 
 	donlond_frp frps
 
-	# 생성된 정보를 출력
+	# 생성된 정보 출력
 	ip_address
 	echo "------------------------"
 	echo "클라이언트 배포에 필요한 매개변수"
@@ -3876,7 +3876,7 @@ remote_port = ${remote_port}
 
 EOF
 
-	# 생성된 정보를 출력
+	# 생성된 정보 출력
 	echo "제공하다$service_namefrpc.toml에 성공적으로 추가되었습니다."
 
 	docker restart frpc
@@ -4123,7 +4123,7 @@ frps_panel() {
 
 			8)
 				send_stats "IP 접근 차단"
-				echo "역방향 도메인 이름 접근이 있는 경우, 이 기능을 사용하면 IP+포트 접근을 차단할 수 있어 더욱 안전합니다."
+				echo "역방향 도메인 이름 접근을 가지고 있는 경우, 이 기능을 사용하면 IP+포트 접근을 차단할 수 있어 더욱 안전합니다."
 				read -e -p "차단할 포트를 입력하세요:" frps_port
 				block_host_port "$frps_port" "$ipv4_address"
 				;;
@@ -4654,7 +4654,7 @@ add_sshkey() {
 		   -e 's/^\s*#\?\s*ChallengeResponseAuthentication .*/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config
 	rm -rf /etc/ssh/sshd_config.d/* /etc/ssh/ssh_config.d/*
 	restart_ssh
-	echo -e "${gl_lv}ROOT 개인 키 로그인이 활성화되었습니다. ROOT 비밀번호 로그인이 비활성화되었습니다. 다시 연결이 적용됩니다.${gl_bai}"
+	echo -e "${gl_lv}ROOT 개인키 로그인이 활성화되어 있고, ROOT 비밀번호 로그인이 비활성화되어 재접속이 적용됩니다.${gl_bai}"
 
 }
 
@@ -5079,7 +5079,7 @@ bbrv3() {
 						apt update -y
 						apt install -y linux-xanmod-x64v$version
 
-						echo "XanMod 커널이 업데이트되었습니다. 재시작 후 적용"
+						echo "XanMod 커널이 업데이트되었습니다. 다시 시작한 후 적용"
 						rm -f /etc/apt/sources.list.d/xanmod-release.list
 						rm -f check_x86-64_psabi.sh*
 
@@ -5089,7 +5089,7 @@ bbrv3() {
 					  2)
 						apt purge -y 'linux-*xanmod1*'
 						update-grub
-						echo "XanMod 커널이 제거되었습니다. 재시작 후 적용"
+						echo "XanMod 커널이 제거되었습니다. 다시 시작한 후 적용"
 						server_reboot
 						  ;;
 
@@ -5116,7 +5116,7 @@ bbrv3() {
 			if [ -r /etc/os-release ]; then
 				. /etc/os-release
 				if [ "$ID" != "debian" ] && [ "$ID" != "ubuntu" ]; then
-					echo "현재 환경에서는 지원하지 않습니다. Debian 및 Ubuntu 시스템만 지원됩니다."
+					echo "현재 환경에서는 지원하지 않으며 Debian 및 Ubuntu 시스템만 지원됩니다."
 					break_end
 					linux_Settings
 				fi
@@ -5143,7 +5143,7 @@ bbrv3() {
 
 			bbr_on
 
-			echo "XanMod 커널이 설치되고 BBR3이 성공적으로 활성화되었습니다. 재시작 후 적용"
+			echo "XanMod 커널이 설치되고 BBR3이 성공적으로 활성화되었습니다. 다시 시작한 후 적용"
 			rm -f /etc/apt/sources.list.d/xanmod-release.list
 			rm -f check_x86-64_psabi.sh*
 			server_reboot
@@ -5232,7 +5232,7 @@ elrepo() {
 					  2)
 						dnf remove -y elrepo-release
 						rpm -qa | grep elrepo | grep kernel | xargs rpm -e --nodeps
-						echo "elrepo 커널이 제거되었습니다. 재시작 후 적용"
+						echo "elrepo 커널이 제거되었습니다. 다시 시작한 후 적용"
 						send_stats "Red Hat 커널 제거"
 						server_reboot
 
@@ -5250,7 +5250,7 @@ elrepo() {
 		  echo "영상 소개: https://www.bilibili.com/video/BV1mH4y1w7qA?t=529.2"
 		  echo "------------------------------------------------"
 		  echo "Red Hat 시리즈 배포판 CentOS/RedHat/Alma/Rocky/oracle만 지원"
-		  echo "Linux 커널을 업그레이드하면 시스템 성능과 보안이 향상될 수 있습니다. 가능하다면 시도해 보시고, 프로덕션 환경을 주의해서 업그레이드하시는 것을 추천드립니다!"
+		  echo "Linux 커널을 업그레이드하면 시스템 성능과 보안이 향상될 수 있습니다. 가능하다면 시도해 보시고, 프로덕션 환경도 주의해서 업그레이드하시는 것을 추천드립니다!"
 		  echo "------------------------------------------------"
 		  read -e -p "계속하시겠습니까? (예/아니요):" choice
 
@@ -5585,7 +5585,7 @@ Kernel_optimize() {
 			  cd ~
 			  clear
 			  optimize_web_server
-			  send_stats "웹사이트 최적화 모드"
+			  send_stats "웹사이트 최적화 모델"
 			  ;;
 		  4)
 			  cd ~
@@ -5792,7 +5792,7 @@ linux_trash() {
 
 	clear
 	echo -e "현재 휴지통${trash_status}"
-	echo -e "활성화한 후에는 중요한 파일이 실수로 삭제되는 것을 방지하기 위해 rm으로 삭제된 파일이 먼저 휴지통에 저장됩니다!"
+	echo -e "활성화한 후에는 중요한 파일이 실수로 삭제되는 것을 방지하기 위해 rm으로 삭제된 파일이 먼저 휴지통에 들어갑니다!"
 	echo "------------------------------------------------"
 	ls -l --color=auto "$TRASH_DIR" 2>/dev/null || echo "휴지통이 비어 있습니다."
 	echo "------------------------"
@@ -6183,7 +6183,7 @@ list_partitions() {
 # 마운트 파티션
 mount_partition() {
 	send_stats "마운트 파티션"
-	read -e -p "마운트할 파티션의 이름을 입력하십시오(예: sda1):" PARTITION
+	read -e -p "마운트할 파티션 이름을 입력하십시오(예: sda1):" PARTITION
 
 	# 파티션이 존재하는지 확인
 	if ! lsblk -o NAME | grep -w "$PARTITION" > /dev/null; then
@@ -6313,7 +6313,7 @@ disk_manager() {
 	send_stats "하드디스크 관리 기능"
 	while true; do
 		clear
-		echo "하드 디스크 파티션 관리"
+		echo "하드 드라이브 파티션 관리"
 		echo -e "${gl_huang}이 기능은 내부 테스트 중이므로 프로덕션 환경에서는 사용하면 안 됩니다.${gl_bai}"
 		echo "------------------------"
 		list_partitions
@@ -7204,7 +7204,7 @@ docker_ssh_migration() {
 
 				mkdir -p "$original_path"
 				tar -xzf "$BACKUP_DIR/compose_project_${project_name}.tar.gz" -C "$original_path"
-				echo -e "${GREEN}프로젝트 작성 [$project_name]는 다음 위치로 추출되었습니다.$original_path${NC}"
+				echo -e "${GREEN}프로젝트 작성 [$project_name]가 다음 위치로 추출되었습니다.$original_path${NC}"
 
 				cd "$original_path" || return
 				docker compose down || true
@@ -7220,7 +7220,7 @@ docker_ssh_migration() {
 			[[ ! -f "$json" ]] && continue
 			has_container=true
 			container=$(basename "$json" | sed 's/_inspect.json//')
-			echo -e "${GREEN}처리 용기:$container${NC}"
+			echo -e "${GREEN}처리용기:$container${NC}"
 
 			# 컨테이너가 이미 존재하고 실행 중인지 확인하세요.
 			if docker ps --format '{{.Names}}' | grep -q "^${container}$"; then
@@ -7294,7 +7294,7 @@ docker_ssh_migration() {
 	migrate_docker() {
 		send_stats "도커 마이그레이션"
 		install jq
-		read -e -p  "마이그레이션할 백업 디렉터리를 입력하십시오:" BACKUP_DIR
+		read -e -p  "마이그레이션할 백업 디렉터리를 입력하세요." BACKUP_DIR
 		[[ ! -d "$BACKUP_DIR" ]] && { echo -e "${RED}백업 디렉터리가 존재하지 않습니다.${NC}"; return; }
 
 		read -e -p  "대상 서버 IP:" TARGET_IP
@@ -7339,7 +7339,7 @@ docker_ssh_migration() {
 			echo -e "1. 도커 프로젝트 백업"
 			echo -e "2. 도커 프로젝트 마이그레이션"
 			echo -e "3. 도커 프로젝트 복원"
-			echo -e "4. Docker 프로젝트의 백업 파일을 삭제합니다."
+			echo -e "4. docker 프로젝트 백업 파일 삭제"
 			echo "------------------------"
 			echo -e "0. 이전 메뉴로 돌아가기"
 			echo "------------------------"
@@ -7539,7 +7539,7 @@ linux_docker() {
 
 						  ;;
 					  2)
-						  read -e -p "삭제 볼륨 이름을 입력하세요(여러 볼륨 이름을 공백으로 구분하세요):" dockerjuans
+						  read -e -p "삭제 볼륨 이름을 입력하십시오(여러 볼륨 이름을 공백으로 구분하십시오):" dockerjuans
 
 						  for dockerjuan in $dockerjuans; do
 							  docker volume rm $dockerjuan
@@ -8530,7 +8530,7 @@ linux_ldnmp() {
 	  echo "배포 시작$webname"
 	  add_yuming
 	  echo -e "도메인 이름 형식:${gl_huang}google.com${gl_bai}"
-	  read -e -p "역방향 프록시 도메인 이름을 입력하세요:" fandai_yuming
+	  read -e -p "역방향 프록시 도메인 이름을 입력하세요." fandai_yuming
 	  nginx_install_status
 	  install_ssltls
 	  certs_status
@@ -9053,7 +9053,7 @@ while true; do
 	  echo -e "${gl_kjlan}67.  ${color67}ddns-go 동적 DNS 관리 도구${gl_huang}★${gl_bai}            ${gl_kjlan}68.  ${color68}AllinSSL 인증서 관리 플랫폼"
 	  echo -e "${gl_kjlan}69.  ${color69}SFTPGo 파일 전송 도구${gl_kjlan}70.  ${color70}AstrBot 챗봇 프레임워크"
 	  echo -e "${gl_kjlan}------------------------"
-	  echo -e "${gl_kjlan}71.  ${color71}Navidrome 개인 음악 서버${gl_kjlan}72.  ${color72}비트워든 비밀번호 관리자${gl_huang}★${gl_bai}"
+	  echo -e "${gl_kjlan}71.  ${color71}Navidrome 개인 음악 서버${gl_kjlan}72.  ${color72}비트워드 비밀번호 관리자${gl_huang}★${gl_bai}"
 	  echo -e "${gl_kjlan}73.  ${color73}LibreTV 개인 영화${gl_kjlan}74.  ${color74}MoonTV 개인 영화"
 	  echo -e "${gl_kjlan}75.  ${color75}멜로디 음악 마법사${gl_kjlan}76.  ${color76}온라인 DOS 오래된 게임"
 	  echo -e "${gl_kjlan}77.  ${color77}Thunder 오프라인 다운로드 도구${gl_kjlan}78.  ${color78}PandaWiki 지능형 문서 관리 시스템"
@@ -9073,7 +9073,7 @@ while true; do
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}101. ${color101}AI 영상 생성 도구${gl_kjlan}102. ${color102}VoceChat 다자간 온라인 채팅 시스템"
 	  echo -e "${gl_kjlan}103. ${color103}Umami 웹사이트 통계 도구${gl_kjlan}104. ${color104}스트림 4계층 프록시 전달 도구"
-	  echo -e "${gl_kjlan}105. ${color105}쓰위안 노트${gl_kjlan}106. ${color106}Drawix 오픈 소스 화이트보드 도구"
+	  echo -e "${gl_kjlan}105. ${color105}쓰위안 노트${gl_kjlan}106. ${color106}Drawnix 오픈 소스 화이트보드 도구"
 	  echo -e "${gl_kjlan}107. ${color107}PanSou 네트워크 디스크 검색"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}b.   ${gl_bai}모든 애플리케이션 데이터 백업${gl_kjlan}r.   ${gl_bai}모든 앱 데이터 복원"
@@ -9267,7 +9267,7 @@ while true; do
 		  ;;
 	  7|nezha)
 		clear
-		send_stats "나타 빌드"
+		send_stats "네자 빌드"
 
 		local app_id="7"
 		local docker_name="nezha-dashboard"
@@ -9388,7 +9388,7 @@ while true; do
 				1)
 					setup_docker_dir
 					check_disk_space 2 /home/docker
-					read -e -p "이메일 도메인 이름을 설정하십시오(예: mail.yuming.com):" yuming
+					read -e -p "이메일 도메인 이름을 설정하세요(예: mail.yuming.com):" yuming
 					mkdir -p /home/docker
 					echo "$yuming" > /home/docker/mail.txt
 					echo "------------------------"
@@ -12596,7 +12596,7 @@ linux_work() {
 	  send_stats "백엔드 작업공간"
 	  echo -e "백엔드 작업공간"
 	  echo -e "시스템은 장기간 작업을 수행하는 데 사용할 수 있는 백그라운드에서 영구적으로 실행될 수 있는 작업 공간을 제공합니다."
-	  echo -e "SSH 연결을 끊더라도 작업 공간의 작업은 중단되지 않으며 작업은 백그라운드에 유지됩니다."
+	  echo -e "SSH 연결을 끊더라도 작업 공간의 작업은 중단되지 않으며 백그라운드 작업은 유지됩니다."
 	  echo -e "${gl_huang}힌트:${gl_bai}워크스페이스 진입 후 Ctrl+b를 누른 후 d만 눌러 워크스페이스를 종료하세요!"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo "현재 존재하는 작업공간 목록"
@@ -12786,10 +12786,10 @@ linux_Settings() {
 	  echo -e "시스템 도구"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}1.   ${gl_bai}스크립트 시작 단축키 설정${gl_kjlan}2.   ${gl_bai}로그인 비밀번호 변경"
-	  echo -e "${gl_kjlan}3.   ${gl_bai}ROOT 비밀번호 로그인 모드${gl_kjlan}4.   ${gl_bai}지정된 버전의 Python 설치"
+	  echo -e "${gl_kjlan}3.   ${gl_bai}ROOT 비밀번호 로그인 모드${gl_kjlan}4.   ${gl_bai}지정된 Python 버전을 설치합니다."
 	  echo -e "${gl_kjlan}5.   ${gl_bai}모든 포트 열기${gl_kjlan}6.   ${gl_bai}SSH 연결 포트 수정"
 	  echo -e "${gl_kjlan}7.   ${gl_bai}DNS 주소 최적화${gl_kjlan}8.   ${gl_bai}한 번의 클릭으로 시스템을 다시 설치${gl_huang}★${gl_bai}"
-	  echo -e "${gl_kjlan}9.   ${gl_bai}ROOT 계정을 비활성화하고 새 계정을 만듭니다.${gl_kjlan}10.  ${gl_bai}우선 순위 ipv4/ipv6 전환"
+	  echo -e "${gl_kjlan}9.   ${gl_bai}ROOT 계정을 비활성화하고 새 계정을 만듭니다.${gl_kjlan}10.  ${gl_bai}우선순위 ipv4/ipv6 전환"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}11.  ${gl_bai}항만점유현황 확인${gl_kjlan}12.  ${gl_bai}가상 메모리 크기 수정"
 	  echo -e "${gl_kjlan}13.  ${gl_bai}사용자 관리${gl_kjlan}14.  ${gl_bai}사용자/비밀번호 생성기"
@@ -13279,7 +13279,7 @@ EOF
 				echo "유럽"
 				echo "11. 영국 런던 시간 12. 프랑스 파리 시간"
 				echo "13. 독일 베를린 시간 14. 러시아 모스크바 시간"
-				echo "15. 네덜란드 유트라흐트 시간 16. 스페인 마드리드 시간"
+				echo "15. 네덜란드 위트레흐트 시간 16. 스페인 마드리드 시간"
 				echo "------------------------"
 				echo "미국"
 				echo "21. 미국 서부 시간 22. 미국 동부 시간"
@@ -13347,7 +13347,7 @@ EOF
 					  echo "$new_hostname" > /etc/hostname
 					  hostname "$new_hostname"
 				  else
-					  # Debian, Ubuntu, CentOS 등과 같은 다른 시스템
+					  # Debian, Ubuntu, CentOS 등과 같은 기타 시스템
 					  hostnamectl set-hostname "$new_hostname"
 					  sed -i "s/$current_hostname/$new_hostname/g" /etc/hostname
 					  systemctl restart systemd-hostnamed
@@ -13380,7 +13380,7 @@ EOF
 		  send_stats "시스템 업데이트 소스 변경"
 		  clear
 		  echo "업데이트 소스 지역 선택"
-		  echo "LinuxMirrors에 액세스하여 시스템 업데이트 소스 전환"
+		  echo "LinuxMirror에 액세스하여 시스템 업데이트 소스 전환"
 		  echo "------------------------"
 		  echo "1. 중국 본토 [기본값] 2. 중국 본토 [교육 네트워크] 3. 해외 지역"
 		  echo "------------------------"
@@ -13437,7 +13437,7 @@ EOF
 
 						  case $dingshi in
 							  1)
-								  read -e -p "작업을 실행하기로 선택한 달의 날짜는 무엇입니까? (1-30):" day
+								  read -e -p "작업을 실행하기로 선택한 날짜는 언제입니까? (1-30):" day
 								  (crontab -l ; echo "0 0 $day * * $newquest") | crontab - > /dev/null 2>&1
 								  ;;
 							  2)
@@ -13600,7 +13600,7 @@ EOF
 				case "$Limiting" in
 				  1)
 					# 새 가상 메모리 크기 입력
-					echo "실제 서버의 트래픽이 100G만 있는 경우 임계값을 95G로 설정하고 미리 종료하여 트래픽 오류나 오버플로를 방지할 수 있습니다."
+					echo "실제 서버에 트래픽이 100G만 있는 경우 임계값을 95G로 설정하고 미리 종료하여 트래픽 오류나 오버플로를 방지할 수 있습니다."
 					read -e -p "인바운드 트래픽 임계값을 입력하십시오(단위는 G, 기본값은 100G)." rx_threshold_gb
 					rx_threshold_gb=${rx_threshold_gb:-100}
 					read -e -p "아웃바운드 트래픽 임계값을 입력하십시오(단위는 G, 기본값은 100G)." tx_threshold_gb
@@ -13645,7 +13645,7 @@ EOF
 			  	  echo "ROOT 개인 키 로그인 모드"
 			  	  echo "영상 소개: https://www.bilibili.com/video/BV1Q4421X78n?t=209.4"
 			  	  echo "------------------------------------------------"
-			  	  echo "SSH를 통해 보다 안전하게 로그인할 수 있도록 키 쌍이 생성됩니다."
+			  	  echo "SSH를 통해 더욱 안전하게 로그인할 수 있는 키 쌍이 생성됩니다."
 				  echo "------------------------"
 				  echo "1. 새 키 생성 2. 기존 키 가져오기 3. 로컬 키 보기"
 				  echo "------------------------"
@@ -13690,7 +13690,7 @@ EOF
 			  root_use
 			  send_stats "전신 경고"
 			  echo "TG-bot 모니터링 및 조기경보 기능"
-			  echo "영상소개: https://youtu.be/vLL-eb3Z_TY"
+			  echo "영상 소개: https://youtu.be/vLL-eb3Z_TY"
 			  echo "------------------------------------------------"
 			  echo "로컬 CPU, 메모리, 하드 디스크, 트래픽 및 SSH 로그인에 대한 실시간 모니터링 및 경고를 달성하려면 경고를 수신하도록 tg 로봇 API 및 사용자 ID를 구성해야 합니다."
 			  echo "임계값에 도달하면 경고 메시지가 사용자에게 전송됩니다."
@@ -13830,7 +13830,7 @@ EOF
 			  echo "2. 시스템 정크 파일 정리"
 			  echo -e "3. 가상 메모리 설정${gl_huang}1G${gl_bai}"
 			  echo -e "4. SSH 포트 번호를 다음으로 설정합니다.${gl_huang}5522${gl_bai}"
-			  echo -e "5. 모든 포트를 엽니다."
+			  echo -e "5. 모든 포트를 엽니다"
 			  echo -e "6. 켜기${gl_huang}BBR${gl_bai}가속하다"
 			  echo -e "7. 시간대를 다음으로 설정합니다.${gl_huang}상하이${gl_bai}"
 			  echo -e "8. DNS 주소 자동 최적화${gl_huang}해외: 1.1.1.1 8.8.8.8 국내: 223.5.5.5${gl_bai}"
@@ -14323,7 +14323,7 @@ while true; do
 		  5)
 			  clear
 			  send_stats "클러스터 복원"
-			  echo "server.py를 업로드하고 아무 키나 눌러 업로드를 시작하세요!"
+			  echo "귀하의 server.py를 업로드하고 업로드를 시작하려면 아무 키나 누르십시오!"
 			  echo -e "업로드해주세요${gl_huang}servers.py${gl_bai}파일을 제출하다${gl_huang}/root/cluster/${gl_bai}복원 완료!"
 			  break_end
 			  ;;
